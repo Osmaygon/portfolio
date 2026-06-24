@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Óscar Mayoral González</title>
+  <style>
+    :root {
+      --bg: #060b10;
+      --ink: #eef7fb;
+      --muted: #8ea3af;
+      --line: rgba(238, 247, 251, .16);
+      --line-strong: rgba(117, 255, 235, .42);
+      --cyan: #75ffeb;
+      --lime: #d8ff6a;
+      --red: #ff5b7e;
+      --panel: rgba(255, 255, 255, .035);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background:
+        linear-gradient(90deg, rgba(117,255,235,.04) 1px, transparent 1px),
+        radial-gradient(circle at 88% 10%, rgba(117,255,235,.13), transparent 28rem),
+        radial-gradient(circle at 18% 38%, rgba(216,255,106,.08), transparent 24rem),
+        var(--bg);
+      background-size: 72px 72px, auto, auto, auto;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,.035) 0 1px, transparent 1px 5px);
+      opacity: .22;
+      mix-blend-mode: overlay;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      color: var(--cyan);
+      font-size: 13px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    nav a { transition: color .18s ease; }
+    nav a:hover { color: var(--cyan); }
+
+    .hero {
+      min-height: 72vh;
+      padding: clamp(54px, 9vw, 118px) 0 44px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--lime);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 1160px;
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: .84;
+      letter-spacing: -.105em;
+      text-transform: uppercase;
+    }
+
+    .hero-intro {
+      display: grid;
+      grid-template-columns: 1fr minmax(180px, 240px);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: end;
+    }
+
+    .hero-text {
+      max-width: 620px;
+      margin: 30px 0 0;
+      color: #c8d7df;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.34;
+    }
+
+    .portrait {
+      margin: 0;
+      border-top: 1px solid var(--line-strong);
+      padding-top: 14px;
+    }
+
+    .portrait img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      filter: grayscale(.15) contrast(1.05);
+    }
+
+    .portrait figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .side-data {
+      margin-top: clamp(38px, 6vw, 70px);
+      border-top: 1px solid var(--line-strong);
+      padding-top: 18px;
+    }
+
+    .side-data dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .side-data dt {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .side-data dd {
+      margin: 6px 0 0;
+      color: var(--ink);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 0 7px;
+      border-bottom: 1px solid currentColor;
+      color: var(--cyan);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .button.alt { color: var(--ink); }
+    .button:hover { color: var(--lime); }
+
+    section {
+      padding: 54px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: clamp(28px, 6vw, 86px);
+    }
+
+    h2 {
+      position: sticky;
+      top: 24px;
+      margin: 0;
+      color: var(--cyan);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .lead {
+      margin: 0 0 34px;
+      max-width: 760px;
+      color: #d7e4ea;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 130px 1fr 180px;
+      gap: 24px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+      transition: background .18s ease, padding-left .18s ease;
+    }
+
+    .project:hover {
+      background: var(--panel);
+      padding-left: 14px;
+    }
+
+    .num {
+      color: var(--red);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: .95;
+      letter-spacing: -.055em;
+      font-weight: 500;
+    }
+
+    .project p, .text p {
+      margin: 0;
+      color: var(--muted);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .tech {
+      color: var(--lime);
+      font-size: 12px;
+      line-height: 1.6;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .project-detail {
+      margin-top: 18px;
+      border-top: 1px solid var(--line-strong);
+      padding-top: 14px;
+    }
+
+    .project-detail summary {
+      width: fit-content;
+      cursor: pointer;
+      color: var(--cyan);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 7px;
+    }
+
+    .project-detail summary:hover { color: var(--lime); }
+
+    .project-detail[open] summary { margin-bottom: 18px; }
+
+    .detail-column {
+      display: grid;
+      gap: 18px;
+      max-width: 760px;
+    }
+
+    .detail-column p {
+      margin: 0;
+    }
+
+    .project-media {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 2px;
+    }
+
+    .project-media figure { margin: 0; }
+
+    .project-media video {
+      width: 100%;
+      max-height: 420px;
+      background: #020508;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .project-media span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 44px;
+    }
+
+    .stack-group {
+      border-top: 1px solid var(--line-strong);
+      padding-top: 18px;
+    }
+
+    .stack-group h3 {
+      margin-bottom: 18px;
+      font-size: 28px;
+    }
+
+    .stack-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .stack-list li::before {
+      content: "// ";
+      color: var(--cyan);
+    }
+
+    .experience-row {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .date {
+      color: var(--lime);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .contact-links {
+      display: grid;
+      gap: 13px;
+      color: var(--cyan);
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 860px) {
+      .topbar, .hero-intro, .section-grid, .project, .columns, .experience-row, .contact-grid, .side-data dl, .project-media {
+        grid-template-columns: 1fr;
+      }
+
+      nav { justify-content: flex-start; }
+      .side-data { padding: 22px 0 0; }
+      h2 { position: static; }
+      .project { gap: 12px; }
+      .stack-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#">Óscar Mayoral González</a>
+    <nav>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#formacion">Formación</a>
+      <a href="#stack">Stack</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="inicio">
+      <div class="hero-intro">
+        <div>
+          <span class="eyebrow">Desarrollador Junior · Técnico Superior DAM</span>
+          <h1>Desarrollador junior completo: lógica, datos, interfaces y prototipos.</h1>
+          <p class="hero-text">Soy Óscar, desarrollador junior con una base fuerte en lógica de programación: Java, SQL, interfaces, aplicaciones web y proyectos donde el software se conecta con datos, hardware y prototipos reales.</p>
+          <div class="actions">
+            <a class="button" href="#proyectos">Ver proyectos</a>
+            <a class="button alt" href="mailto:oscar.mayoralgonzalez@gmail.com">Contactar</a>
+            <a class="button alt" href="https://github.com/Osmaygon" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+        <figure class="portrait">
+          <img src="imagenes/Oscar.jpg" alt="Foto de Óscar Mayoral González">
+          <figcaption>Óscar Mayoral González</figcaption>
+        </figure>
+      </div>
+
+      <aside class="side-data" aria-label="Datos rápidos">
+        <dl>
+          <div>
+            <dt>Ubicación</dt>
+            <dd>Alcorcón, Madrid</dd>
+          </div>
+          <div>
+            <dt>Disponibilidad</dt>
+            <dd>Madrid híbrido/remoto. Fuera de Madrid 100% remoto.</dd>
+          </div>
+          <div>
+            <dt>Idiomas</dt>
+            <dd>Español nativo · Inglés B2</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section id="proyectos">
+      <div class="section-grid">
+        <h2>Proyectos</h2>
+        <div>
+          <p class="lead">Proyectos que muestran distintos ámbitos: web moderna, programación, bases de datos, interfaces, robótica e impresión 3D.</p>
+          <div class="project-list">
+            <article class="project">
+              <span class="num">01</span>
+              <div>
+                <h3>NoteD&DCharacter</h3>
+                <p>Aplicación web interactiva para importar, consultar y usar fichas de Dungeons & Dragons durante una partida real. Permite importar personajes desde Nivel20/PDF, persistir datos y gestionar inventario, cartera, munición, salud, escudo, estados, conjuros y rasgos por usuario.</p>
+                <details class="project-detail">
+                  <summary>Ver explicación del proyecto</summary>
+                  <div class="detail-column">
+                    <p>El objetivo del proyecto es que una ficha de D&D sea útil durante una partida, no solo una copia visual del PDF. La aplicación separa información estable del personaje, herramientas rápidas de combate y datos editables durante la sesión.</p>
+                    <p>Trabaja con importación desde Nivel20 y PDF, parser propio para extraer datos, persistencia en Supabase y estado editable por usuario para no pisar vida, vida temporal, espacios de conjuro o munición de otras cuentas.</p>
+                    <p>Incluye gestión de inventario, cartera, munición, salud, escudo, estados activos, conjuros, rasgos y descripciones desplegables. Es un proyecto donde se mezclan frontend, lógica, datos, APIs internas y diseño de una interfaz pensada para uso real.</p>
+                  </div>
+                </details>
+              </div>
+              <span class="tech">Next.js<br>React<br>TypeScript<br>Supabase</span>
+            </article>
+
+            <article class="project">
+              <span class="num">02</span>
+              <div>
+                <h3>Gestión de incidencias universitarias</h3>
+                <p>Aplicación de escritorio para reportar, consultar y administrar incidencias en un campus. Diseñé la maqueta e interfaz completa, y después participé junto al equipo en el desarrollo de la base de datos y el código.</p>
+                <p><a class="button" href="https://github.com/Osmaygon/DAM-1-PI" target="_blank" rel="noreferrer">Repositorio</a></p>
+              </div>
+              <span class="tech">Java<br>SQL<br>MVC<br>WindowBuilder</span>
+            </article>
+
+            <article class="project">
+              <span class="num">03</span>
+              <div>
+                <h3>Papelera inteligente</h3>
+                <p>TFC de prototipado físico. Mi parte se centró en convertir la detección del residuo en movimiento real: diseño 3D de piezas, bloque interno, embudo-engranaje, motores, servos, sensor y control mediante Arduino.</p>
+                <details class="project-detail">
+                  <summary>Ver explicación y vídeos</summary>
+                  <div class="detail-column">
+                    <p>El proyecto combinaba una parte de detección mediante cámara e IA con una parte física capaz de mover el residuo hacia el compartimento correspondiente. Mi responsabilidad principal fue la parte mecánica y de control: diseñar piezas funcionales, preparar el mecanismo y coordinar motores, servos y sensor con Arduino.</p>
+                    <p>Diseñé el bloque interno que ocultaba servos, motores y cables, además del embudo, el engranaje y los dientes del embudo para convertirlo en una pieza mecánica funcional. La idea era que la detección digital terminase produciendo una acción física real.</p>
+                    <div class="project-media" aria-label="Vídeos de la papelera inteligente">
+                      <figure>
+                        <video controls preload="metadata">
+                          <source src="imagenes/AnimacionPapeleraFusion.mp4" type="video/mp4">
+                        </video>
+                        <span>Animación del mecanismo</span>
+                      </figure>
+                      <figure>
+                        <video controls preload="metadata">
+                          <source src="imagenes/PruebaPapeleraReal.mp4" type="video/mp4">
+                        </video>
+                        <span>Prueba real del prototipo</span>
+                      </figure>
+                    </div>
+                  </div>
+                </details>
+              </div>
+              <span class="tech">Arduino<br>Robótica<br>Impresión 3D<br>Servos</span>
+            </article>
+
+            <article class="project">
+              <span class="num">04</span>
+              <div>
+                <h3>Galería de cuadros</h3>
+                <p>Web informativa conectada a base de datos para visualizar cuadros y gestionar contenido desde administrador, con creación y edición de datos.</p>
+                <details class="project-detail">
+                  <summary>Ver explicación del proyecto</summary>
+                  <div class="detail-column">
+                    <p>La galería está pensada para consultar información de cuadros de forma ordenada, separando la parte pública de visualización y la parte de administración de contenido.</p>
+                    <p>El administrador puede añadir nuevos registros o editar datos existentes, lo que convierte el proyecto en una práctica completa de gestión de contenido: estructura web, base de datos, formularios y operaciones CRUD básicas.</p>
+                    <p>Este proyecto demuestra una parte más orientada a lenguajes de marcas, interfaces sencillas y organización de información persistente.</p>
+                  </div>
+                </details>
+              </div>
+              <span class="tech">Web<br>Base de datos<br>Admin<br>CRUD</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <div class="section-grid">
+        <h2>Experiencia</h2>
+        <div class="experience-row">
+          <span class="date">Marzo – Junio</span>
+          <div class="text">
+            <h3>Desarrollador en prácticas — CRM web</h3>
+            <p>Participación en el desarrollo de un CRM web para gestión interna de información y clientes/usuarios en Hogar Madrid Sur. Apoyo en funcionalidades, revisión de errores, pruebas y documentación básica.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="section-grid">
+        <h2>Stack</h2>
+        <div class="columns">
+          <div class="stack-group">
+            <h3>Tecnologías</h3>
+            <ul class="stack-list">
+              <li>Java</li>
+              <li>Kotlin</li>
+              <li>JS / TS</li>
+              <li>Python</li>
+              <li>C</li>
+              <li>CSS</li>
+              <li>SQL</li>
+              <li>MySQL / Oracle</li>
+              <li>React / Next.js</li>
+              <li>Android</li>
+            </ul>
+          </div>
+          <div class="stack-group">
+            <h3>Herramientas</h3>
+            <ul class="stack-list">
+              <li>Git / GitHub</li>
+              <li>Eclipse IDE</li>
+              <li>VS Code</li>
+              <li>Visual Studio</li>
+              <li>WindowBuilder</li>
+              <li>JDBC</li>
+              <li>Supabase</li>
+              <li>JSON</li>
+              <li>Arduino</li>
+              <li>Impresión 3D</li>
+              <li>Diseño de piezas 3D</li>
+              <li>Documentación técnica</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="formacion">
+      <div class="section-grid">
+        <h2>Formación</h2>
+        <div class="project-list">
+          <article class="project">
+            <span class="num">2024–2026</span>
+            <div>
+              <h3>Técnico Superior en Desarrollo de Aplicaciones Multiplataforma</h3>
+              <p>Formación DAM finalizada en la Universidad Europea de Madrid. Mi asignatura más fuerte fue Programación, especialmente por la lógica: entender un problema, dividirlo en partes y construir una solución funcional paso a paso.</p>
+            </div>
+            <span class="tech">DAM<br>Java<br>SQL<br>Interfaces</span>
+          </article>
+          <article class="project">
+            <span class="num">42</span>
+            <div>
+              <h3>Piscina de 42</h3>
+              <p>Realicé la piscina de 42, donde trabajé con C y reforcé fundamentos de programación, lógica, autonomía y resolución de problemas.</p>
+            </div>
+            <span class="tech">C<br>Lógica<br>Autonomía</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="section-grid">
+        <h2>Contacto</h2>
+        <div class="contact-grid">
+          <p class="lead">Busco incorporarme a un equipo de desarrollo junior y seguir creciendo con proyectos reales.</p>
+          <div class="contact-links">
+            <a href="mailto:oscar.mayoralgonzalez@gmail.com">oscar.mayoralgonzalez@gmail.com</a>
+            <a href="tel:+34638006963">638 006 963</a>
+            <a href="https://www.linkedin.com/in/osmaygon" target="_blank" rel="noreferrer">linkedin.com/in/osmaygon</a>
+            <a href="https://github.com/Osmaygon" target="_blank" rel="noreferrer">github.com/Osmaygon</a>
+            <a href="https://www.credly.com/users/oscar-mayoral-gonzalez" target="_blank" rel="noreferrer">Credly</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>© 2026 Óscar Mayoral González</span>
+
+  </footer>
+</body>
+</html>
